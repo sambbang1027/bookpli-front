@@ -96,7 +96,7 @@ const startEditing = () => {
 const saveEdit = async () => {
   try {
     // 닉네임 중복 체크 후 저장
-    const duplicateResponse = await apiClient.get(`/api/mypage/nickname/${user.userNickname}`);
+    const duplicateResponse = await apiClient.get(`/authservice/nickname/${user.userNickname}`);
     if (duplicateResponse.data.data) {
       nicknameError.value = true;
       errorMessage.value = "이미 존재하는 닉네임입니다.";
@@ -108,7 +108,7 @@ const saveEdit = async () => {
       userId: authStore.user.userId,
       userNickname: user.userNickname,
     };
-    await apiClient.patch("/api/mypage", request);
+    await apiClient.patch("/authservice", request);
     isEditing.value = false;
     nicknameError.value = false;
     nicknameCheck.value = false;
@@ -135,7 +135,7 @@ const closeModal = () => {
 // 유저 정보 로드
 const loadUserInfo = async () => {
   try {
-    const response = await apiClient.get(`/api/mypage/${authStore.user.userId}`);
+    const response = await apiClient.get(`/authservice/user/${authStore.user.userId}`);
     Object.assign(user, response.data.data);
   } catch (error) {
     console.error("데이터 불러오기 오류:", error);
@@ -153,7 +153,7 @@ const duplicateCheckNickname = async () => {
   }
 
   try {
-    const response = await apiClient.get(`/api/mypage/nickname/${user.userNickname}`);
+    const response = await apiClient.get(`/authservice/nickname/${user.userNickname}`);
     if (response.data.data) {
       // 이미 존재하는 닉네임
       nicknameError.value = true;

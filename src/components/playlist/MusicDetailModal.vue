@@ -161,7 +161,7 @@ const formatDuration = (ms) => {
 // 앨범 트랙 가져오기
 const getAlbumTracks = async () => {
   try {
-    const response = await apiClient.get(`/api/music/album/${songData.value.albumId}`);
+    const response = await apiClient.get(`/musicservice/album/${songData.value.albumId}`);
     tracks.value = response.data.data.items.map((track) => ({
       id: track.id,
       name: track.name,
@@ -264,7 +264,7 @@ const togglePlaylistModal = async () => {
 const selectPlaylist = async (playlistId) => {
   try {
     // 1. 선택한 플레이리스트에 곡 존재 여부 확인
-    const response = await apiClient.get(`/api/mypli/playlist/${playlistId}`);
+    const response = await apiClient.get(`/musicservice/playlist/${playlistId}`);
 
     // 2. 곡이 이미 존재하면 확인 창 표시
     const utilModalStore = useUtilModalStore();
@@ -288,7 +288,7 @@ const selectPlaylist = async (playlistId) => {
 const addMusicToPlaylist = async(playlistId) => {
   const songUri = `spotify:track:${songData.value.id}`;
   try {
-    await apiClient.post(`/api/mypli/playlist/${playlistId}`, {
+    await apiClient.post(`/musicservice/playlist/${playlistId}`, {
         uris: [songUri],
       });
 

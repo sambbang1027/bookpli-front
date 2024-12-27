@@ -253,7 +253,7 @@ const updateTitle = async () => {
     return;
   }
   try {
-    await apiClient.put(`/api/mypli/playlist/${selectedPlaylist.value.id}`, {
+    await apiClient.put(`/musicservice/playlist/${selectedPlaylist.value.id}`, {
       name: editedTitle.value,
     });
 
@@ -384,7 +384,7 @@ const confirmDeletePlaylist = (playlistId) => {
   
   const deletePlaylist = async(playlistId) => {
     try {
-      await apiClient.delete(`/api/mypli/playlist/${playlistId}`);
+      await apiClient.delete(`/musicservice/playlist/${playlistId}`);
       getUserPlaylist();
       selectedPlaylist.value=null;
       showOptionMenu.value = false;
@@ -420,7 +420,7 @@ const loadTracks = async (playlistId) => {
 // Spotify API: 플레이리스트 가져오기
 const getUserPlaylist = async () => {
   try {
-    const response = await apiClient.get("/api/mypli");
+    const response = await apiClient.get("/musicservice");
     playlists.value = response.data.data.items.map((item) => ({
       id: item.id,
       name: item.name,
@@ -469,7 +469,7 @@ const addPlaylist = async () => {
   }
 
   try {
-    const response = await apiClient.post(`/api/mypli/${authStore.user.spotifyId}`, {
+    const response = await apiClient.post(`/musicservice/${authStore.user.spotifyId}`, {
       name: newPlaylistName.value,
     });
     myPlaylists.value.push({

@@ -16,14 +16,8 @@ export default defineConfig({
     emptyOutDir: true, // 기존 빌드 결과 삭제
   },
   // 개발 서버 설정(배포시에는 효과X)
-  // server: {
-  //   port: 3000, // 개발 서버 포트 설정
-  //   host: "0.0.0.0", // 모든 네트워크 인터페이스에서 접근 가능
-  //   proxy: {
-  //     "/api": {
-  //       target: "http://localhost:8081", // Spring Boot 서버 주소
-  //       changeOrigin: true,
-  //     },
-  //   },
-  // },
+  server: {
+    port: 3000, // 개발 서버 포트 설정
+    host: "0.0.0.0", // 모든 네트워크 인터페이스에서 접근 가능
+  },
 });

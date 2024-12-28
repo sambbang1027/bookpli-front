@@ -35,7 +35,7 @@ function goHome() {
 }
 
 const handleLogin = async () => {
-  const response = await apiClient.get('/api/auth/login');
+  const response = await apiClient.get('/authservice/login');
   spotifyLoginUrl.value = response.data;
   window.location.href = spotifyLoginUrl.value;
 };

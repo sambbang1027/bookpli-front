@@ -136,7 +136,7 @@ const loadBookDetail = async () => {
 // 내 서재 상태 확인
 const checkLibraryStatus = async () => {
     try {
-        const response = await apiClient.get('/bookservice/library');
+        const response = await apiClient.get(`/bookservice/library/${authStore.user.userId}`);
         const libraryItems = response.data.data || [];
         const existingBook = libraryItems.find((item) => item.isbn13 === book.value.isbn13);
 

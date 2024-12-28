@@ -86,6 +86,7 @@ export default {
   const authStore = useAuthStore();
   
   onMounted(() => {
+    console.log('리뷰 도착');
     getMyList();
   });
 
@@ -105,7 +106,7 @@ export default {
       try{
         const response = await apiClient.get(`/bookservice/review/myreview/${authStore.user.userId}`)
         if(response.status == 200){
-        serverReview.value = response.data;
+        serverReview.value = response.data.data;
         // 각각의 배열에 showModal을 넣어서 개별적 실행 
         if (Array.isArray(serverReview.value)){
           reviews.value = serverReview.value.map(review => ({

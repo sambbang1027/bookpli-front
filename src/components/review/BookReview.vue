@@ -41,6 +41,8 @@ import apiClient from '@/api/axiosInstance';
 import { onMounted, ref} from "vue";
 import fullStarImage from "@/assets/icons/full_star.png";
 import profile from "@/assets/icons/profile.png";
+import { useAuthStore } from '@/stores/auth';
+import { useUserStore } from '@/stores/user';
 
 
 onMounted(()=>{
@@ -54,6 +56,7 @@ const props = defineProps({
    },
 });
 
+
         /* 리뷰 리스트 조회 */
 
     //브라우저에 출력할 리뷰의 값 
@@ -61,8 +64,27 @@ const reviews = ref([]);
 
     // 리뷰 리스트 조회
 const getList = async(isbn13) => {
+  const authStore = useAuthStore(); // Pinia authStore 가져오기
+    let token = null;
+
+    if (authStore.isAuthenticated && authStore.user?.spotifyId) {
+        const spotifyId = authStore.user.spotifyId; // 사용자 Spotify ID
+        console.log("Spotify ID:", spotifyId);
+
+        const response = await apiClient.get(`/authservice/accessToken/${spotifyId}`);
+        token = response.data.data;
+        console.log("토큰 확인!!!!!!!!!!! Access Token:", token);
+
+    } else {
+        console.log("확인할 수 없는 회원입니다.");
+    }
+
     try{
-        const response = await apiClient.get(`/bookservice/review/book/${isbn13}`);
+        const response = await apiClient.get(`/bookservice/review/book/${isbn13}`,{
+          headers : {
+            Authorization: `Bearer ${token}`,
+          }
+        });
         reviews.value = response.data.data || [];
         if(response.status ==200){
             reviews.value=response.data.data;

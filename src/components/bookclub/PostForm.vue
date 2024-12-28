@@ -297,7 +297,7 @@ import { useLoadingStore } from '@/stores/loading';
   .preview-img {
     width: 150px;
     height: 150px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 10px;
   }
   .preImg-box {

@@ -206,7 +206,7 @@
         try {
             if (authStore.isAuthenticated) {
                 const spotifyId = authStore.user.spotifyId;
-                const response = await fetch(`http://localhost:8081/tokens/accessToken?spotifyId=${spotifyId}`, {
+                const response = await fetch(`http://localhost:8080/tokens/accessToken?spotifyId=${spotifyId}`, {
                     credentials: "include",
             });
 
@@ -327,7 +327,7 @@
     // 독서 데이터 로드
     const loadBooks = async (status, targetList) => {
       try {
-        const { data } = await apiClient.get(`/api/miniroom/user/${authStore.user.userId}/book`, {
+        const { data } = await apiClient.get(`/bookservice/miniroom/user/${authStore.user.userId}/book`, {
           params: { status },
         });
         targetList.value = data;
@@ -339,7 +339,7 @@
     // 사용자 정보 로드
     const loadUserProfile = async () => {
       try {
-        const { data } = await apiClient.get(`/api/miniroom/user/${authStore.user.userId}/profile`);
+        const { data } = await apiClient.get(`/authservice/user/${authStore.user.userId}`);
         userData.value = data;
       } catch (error) {
         console.error("사용자 정보 로드 실패:", error);
@@ -370,7 +370,7 @@
 
         if (today > endDate) {
         try {
-            const response = await apiClient.put(`/api/miniroom/fail/${book.isbn13}`);
+            const response = await apiClient.put(`/bookservice/miniroom/fail/${book.isbn13}`);
 
             // 통일된 Alert 모달 호출
             utilModalStore.showModal(
@@ -449,7 +449,7 @@
         "warning",
         async () => {
             try {
-            const { status } = await apiClient.put(`/api/miniroom/clear/${book.isbn13}?status=completed`);
+            const { status } = await apiClient.put(`/bookservice/miniroom/clear/${book.isbn13}?status=completed`);
             if (status === 200) {
                 alert("완독 처리되었습니다.");
                 await loadBooks("reading", readList);
@@ -467,7 +467,7 @@
 
     const likeordislike = async () => {
         try{
-            const response= await apiClient.get(`/api/book/${authStore.user.userId}/${isbn13}`);
+            const response= await apiClient.get(`/bookservice/book/${authStore.user.userId}/${isbn13}`);
             liked.value=response.data;
             console.log(liked.data);
         }catch(error){

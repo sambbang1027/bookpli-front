@@ -94,7 +94,7 @@ export default {
     // 수정 데이터 불러오기
     const loadPostData = async () => {
   try {
-    const response = await apiClient.get('/api/post/getOne', {
+    const response = await apiClient.get('/bookservice/post/getOne', {
       params: { postId: props.editId },
     });
     post.value = response.data.data;
@@ -184,7 +184,7 @@ export default {
     });
 
         // 서버에 수정된 게시글 정보 전송
-        const response = await apiClient.put('/api/post/edit', post.value);
+        const response = await apiClient.put('/bookservice/post/edit', post.value);
         if(response.status ==200){
           closeModal();
         }

@@ -181,7 +181,7 @@ import { useLoadingStore } from '@/stores/loading';
                     postContent: form.value.postContent,
                     imageUrl: imageDtos,  // 이미지 URL 배열을 PostImageDTO 배열로
                 };
-                const response = await apiClient.post("/api/post/insert", data);
+                const response = await apiClient.post("/bookservice/post/insert", data);
                 if(response.data?.data === true){
                     utilModalStore.showModal(
                         '게시글 등록',

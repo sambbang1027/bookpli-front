@@ -115,7 +115,7 @@
         reviewContent: reviewContent.value ,
         rating: rating.value
       };
-        await apiClient.post("/api/review/post",review);
+        await apiClient.post("/bookservice/review/post",review);
        
        utilModalStore.showModal(
         '리뷰 등록',

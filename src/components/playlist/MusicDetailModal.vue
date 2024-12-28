@@ -242,7 +242,7 @@ const playAlbum = async (albumId) => {
 const getMyPlaylist = async () => {
   const authStore = useAuthStore(); 
   try {
-    const response = await apiClient.get("api/mypli");
+    const response = await apiClient.get("/musicservice");
     playlists.value = response.data.data.items
       .filter((item) => item.owner.id === authStore.user.spotifyId)
       .map((item) => ({

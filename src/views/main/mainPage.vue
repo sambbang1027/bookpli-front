@@ -22,7 +22,6 @@
 
 <script setup>
   import { ref, onMounted } from "vue";
-  import { useUserStore } from "@/stores/user.js";
   import { useAuthStore } from '@/stores/auth.js';
   import bookSection from "@/components/bookSection.vue";
   import musicSection from "@/components/musicSection.vue";
@@ -31,31 +30,6 @@
   const isMusicSection = ref(false);
   const authStore = useAuthStore();
   const modalStore = useLoginAlertModalStore();
-
-  // Access Token을 가져오는 함수
-const getToken = async () => {
-  try {
-      if (authStore.isAuthenticated) {
-      const spotifyId = authStore.user.spotifyId;
-      const response = await fetch(`http://localhost:8081/tokens/accessToken?spotifyId=${spotifyId}`, {
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch access token");
-      }
-
-      const data = await response.json();
-      const accessToken = data.access_token;
-      const userStore = useUserStore(); 
-      userStore.setAccessToken(accessToken);
-    }else {
-      console.log("확인할 수 없는 회원입니다."); 
-    }
-  } catch (error) {
-    console.error(error.message);
-  }
-};
 
 // MusicSection 접근 시 권한 확인
 const handleToggle = () => {
@@ -74,10 +48,6 @@ const handleToggle = () => {
     );
   }
 };
-
-  onMounted(async () => {
-    await getToken();
-  });
 </script>
 
 <style scoped>

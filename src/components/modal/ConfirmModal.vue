@@ -11,8 +11,8 @@
           <p class="modal-subtitle">{{ modalStore.warningMessage }}</p>
         </div>
         <div class="modal-footer">
-          <button class="delete-button" @click="handleConfirmAction">{{ modalStore.cofirmButton }}</button>
-          <button class="cancel-button" @click="modalStore.closeModal">취소</button>
+          <button class="confirm-delete-button" @click="handleConfirmAction">{{ modalStore.cofirmButton }}</button>
+          <button class="confirm-cancel-button" @click="modalStore.closeModal">취소</button>
         </div>
       </div>
     </div>
@@ -122,7 +122,7 @@ const modalImage = computed(() => {
     margin-top: 23px;
   }
   
-  .delete-button {
+  .confirm-delete-button {
     background: #222521;
     color: #ffffff;
     border: none;
@@ -133,7 +133,7 @@ const modalImage = computed(() => {
     cursor: pointer;
   }
   
-  .cancel-button {
+  .confirm-cancel-button {
     background: #ffffff;
     color: #555353;
     border: 1px solid #555353;

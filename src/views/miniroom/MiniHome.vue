@@ -149,7 +149,7 @@
     import { ref, computed, onMounted } from "vue";
     import { useRouter } from "vue-router";
     import { useAuthStore } from "@/stores/auth";
-    import { useUserStore } from "@/stores/user.js";
+    import { useUserStore } from "@/stores/user";
     import { useProgressStore } from "@/stores/readingProgressbar";
     import MusicPlayer from '@/components/layouts/musicPlayer.vue';
     import ReadGoalModal from "@/components/readGoal/ReadGoalModal.vue";
@@ -165,7 +165,6 @@
     const router = useRouter();
     const authStore = useAuthStore();
     const progressStore = useProgressStore();
-    const userStore = useUserStore();
 
     const userData = ref({});
     const addList = ref([]);
@@ -203,27 +202,28 @@
     });
 
     const getToken = async () => {
-        try {
-            if (authStore.isAuthenticated) {
-                const spotifyId = authStore.user.spotifyId;
-                const response = await fetch(`/authservice/tokens/accessToken?spotifyId=${spotifyId}`, {
-                    credentials: "include",
-            });
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch access token");
-            }
+    const userStore = useUserStore(); // Pinia userStore 가져오기
+    const authStore = useAuthStore(); // Pinia authStore 가져오기
 
-            const data = await response.json();
-            const accessToken = data.access_token;
-            userStore.setAccessToken(accessToken);
-            } else {
-                console.log("확인할 수 없는 회원입니다.");
-            }
-        } catch (error) {
-            console.error(error.message);
+    try {
+        if (authStore.isAuthenticated && authStore.user?.spotifyId) {
+            const spotifyId = authStore.user.spotifyId; // 사용자 Spotify ID
+            console.log("Spotify ID:", spotifyId);
+
+            const response = await apiClient.get(`/authservice/accessToken/${spotifyId}`);
+            const token = response.data.data;
+            console.log("토큰 확인!!!!!!!!!!! Access Token:", token);
+
+            // Access Token 설정
+            userStore.setAccessToken(token);
+        } else {
+            console.log("확인할 수 없는 회원입니다.");
         }
-    };
+    } catch (error) {
+        console.error("Error fetching access token:", error.message || error);
+    }
+};
 
     const loadReadList = () => {
         const utilModalStore = useUtilModalStore();

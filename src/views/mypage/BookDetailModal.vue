@@ -62,6 +62,7 @@ import { useRouterUtils } from "@/router/routerUtils";
 import apiClient from "@/api/axiosInstance";
 import { addBookLike, removeBookLike } from "@/utils/likeUtils";
 import ReadGoalModal from "@/components/readGoal/ReadGoalModal.vue";
+import { useAuthStore } from "@/stores/auth";
 
 // Store 및 유틸리티
 const { gotoDetail } = useRouterUtils();
@@ -70,6 +71,7 @@ const { gotoDetail } = useRouterUtils();
 const bookLikeId = ref(null);
 const readGoalToggle = ref(false);
 const bookData = ref({});
+const authStore = useAuthStore();
 
 // Props 정의
 const props = defineProps({
@@ -98,7 +100,7 @@ const isLiked = computed(() => bookLikeId.value !== null);
 const getBookLikeStatus = async () => {
   try {
     const response = await apiClient.get(
-      `/api/library/book/${props.book.isbn13}`
+      `/bookservice/library/book/${props.book.isbn13}/${authStore.user.userId}`
     );
     bookLikeId.value = response.data.data;
   } catch (error) {
@@ -109,7 +111,7 @@ const getBookLikeStatus = async () => {
 const handleAddToLibrary = async () => {
   try {
     // API 요청
-    const response = await apiClient.post(`/api/library/${localBook.value.isbn13}`);
+    const response = await apiClient.post(`/bookservice/library/${authStore.user.userId}/${localBook.value.isbn13}`);
 
     // 로컬 데이터 업데이트
     localBook.value = response.data.data;

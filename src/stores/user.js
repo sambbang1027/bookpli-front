@@ -5,8 +5,8 @@ export const useUserStore = defineStore("user", {
     accessToken: null,
   }),
   actions: {
-    setAccessToken(token) {
-      this.accessToken = token;
+    setAccessToken(accessToken) {
+      this.accessToken = accessToken;
     },
     clearAccessToken() {
       this.accessToken = null;
@@ -16,9 +16,9 @@ export const useUserStore = defineStore("user", {
     enabled: true,
     strategies: [
       {
-        key: "token",
-        storage: localStorage,
-        paths: ["token"],
+        key: "token", // 로컬스토리지에 저장될 키
+        storage: localStorage, // 저장 방식
+        paths: ["accessToken"], // state의 accessToken만 저장
       },
     ],
   },

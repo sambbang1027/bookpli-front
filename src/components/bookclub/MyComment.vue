@@ -171,7 +171,7 @@
           // 댓글 조회
       const getComments = async() => {
         try{
-          const response = await apiClient.get(`/api/comment/user`, {
+          const response = await apiClient.get(`/bookservice/comment/user`, {
             params : {
               userId : props.userId,
               bookClubId : props.bookclubId
@@ -207,7 +207,7 @@
 
      // 좋아요 default 값 설정
      const heartChecking = async(commentId,userId) => {
-        const response = await apiClient.get(`/api/commentlike/checking`,{
+        const response = await apiClient.get(`/bookservice/commentlike/checking`,{
           params:{
             commentId : commentId,
           userId : userId
@@ -221,7 +221,7 @@
       }
 
       const getLikes = async(commentId) => {
-        const response = await apiClient.get(`/api/commentlike/${commentId}`);
+        const response = await apiClient.get(`/bookservice/commentlike/${commentId}`);
         try{
         if(response.status == 200){
           return response.data.data;
@@ -238,7 +238,7 @@
           commentId : commentId,
         };
         try{
-          const response = await apiClient.post(`/api/commentlike/mylike`,checking);
+          const response = await apiClient.post(`/bookservice/commentlike/mylike`,checking);
 
           if(response.data.data!==undefined){
           // 현재 상태를 확인하고 적절히 처리
@@ -302,7 +302,7 @@
           }
           
           try {
-            const response =  await apiClient.put("/api/comment/edit", comment);
+            const response =  await apiClient.put("/bookservice/comment/edit", comment);
                 if(response.status ==200){
                   const index = comments.value.findIndex((item) => item.commentId == comment.commentId);
 
@@ -331,7 +331,7 @@
         };        
         const deleteList = async(commentId) => {
                 try{
-                    const response = await apiClient.delete(`/api/comment/delete`, {
+                    const response = await apiClient.delete(`/bookservice/comment/delete`, {
                         params : {commentId : commentId},
                     });
                     if(response.status == 200){
@@ -367,7 +367,7 @@
 
       const getPost = async (postId) => {
         try {
-          const response = await apiClient.get(`/api/post/comment/readOne`, {
+          const response = await apiClient.get(`/bookservice/post/comment/readOne`, {
             params: { postId },
           });
           if (response.status === 200) {

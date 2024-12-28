@@ -117,7 +117,7 @@ const handleCloseModal = () => {
     margin-top: 23px;
   }
   
-  .delete-button {
+  .login-delete-button {
     background: #222521;
     color: #ffffff;
     border: none;
@@ -128,17 +128,6 @@ const handleCloseModal = () => {
     cursor: pointer;
   }
   
-  .cancel-button {
-    background: #ffffff;
-    color: #555353;
-    border: 1px solid #555353;
-    border-radius: 20px;
-    height: 35px;
-    padding: 0px 20px;
-    font-size: 12px;
-    cursor: pointer;
-  }
-
   .close-icon {
     width: 9px;
     height: 9px;

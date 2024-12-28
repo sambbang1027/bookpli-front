@@ -142,7 +142,7 @@
           // 나의 게시글 조회
       const getMyposts = async()=> {
 
-        const response = await apiClient.get(`/api/post/bookclub/mypost`, {
+        const response = await apiClient.get(`/bookservice/post/bookclub/mypost`, {
           params : {userId : props.userId, 
             bookClubId : props.bookclubId }
         });
@@ -192,7 +192,7 @@
         // 좋아요 숫자 가져오기 
       const getLikes = async(postId)=>{
         try{
-        const response = await apiClient.get(`/api/postlike/${postId}`);
+        const response = await apiClient.get(`/bookservice/postlike/${postId}`);
         return response.data.data;
         }catch(error){
           console.error(error, "에러발생");
@@ -202,7 +202,7 @@
       
           // default 좋아요 체킹 
       const heartChecking = async(postId, userId)=>{
-      const response = await apiClient.get(`/api/postlike/checkingLike`, {
+      const response = await apiClient.get(`/bookservice/postlike/checkingLike`, {
         params: {
           postId : postId ,
           userId : userId , 
@@ -222,7 +222,7 @@
             userId : authStore.user.userId,
           }
           try{
-            const response = await apiClient.post(`api/postlike/mylike` ,checking );
+            const response = await apiClient.post(`bookservice/postlike/mylike` ,checking );
   
             if(response.data.data !== undefined){
               posts.value[index].likes.changeLike = response.data.data  ? like : dislike;
@@ -266,7 +266,7 @@
         // 서버로 삭제 요청
         const deleteList = async(postId) => {
             try{
-                const response = await apiClient.delete("/api/post/delete", {
+                const response = await apiClient.delete("/bookservice/post/delete", {
                     params : {postId :postId },
                 });
                 if(response.data.data == true){

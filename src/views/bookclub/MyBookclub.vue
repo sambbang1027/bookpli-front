@@ -2,7 +2,7 @@
     <div class="community-post">
       <div class="community-label">커뮤니티</div>
       <header class="header">
-        <img class="profile-image" :src="userInfo.profilePath || Profile" alt="Profile" />
+        <img class="mybook-profile-image" :src="userInfo.profilePath || Profile" alt="Profile" />
         <div class="title-icon">
             <div class="post-header">
                 <div class="post-title">{{ bookInfo.title.replace(/\(.*?\)/g, '').trim()}}</div>
@@ -155,7 +155,7 @@ import musicPlayer from "@/components/layouts/musicPlayer.vue";
         
         const userInfo = ref({});
         const getInfo = async() => {
-          const response = await apiClient.get(`api/mypage/${authStore.user.userId}`);
+          const response = await apiClient.get(`authservice/user/${authStore.user.userId}`);
           if(response.status == 200){
             userInfo.value = response.data.data;
           }else{
@@ -297,7 +297,7 @@ import musicPlayer from "@/components/layouts/musicPlayer.vue";
     gap: 50px;
   }
   
-  .profile-image {
+  .mybook-profile-image {
     width: 90px;
     height:90px;
     border-radius: 50%;

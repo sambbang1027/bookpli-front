@@ -124,7 +124,7 @@ const showModal = ref(false);
 // 도서 상세 정보 로드
 const loadBookDetail = async () => {
     try {
-        const response = await apiClient.get(`/api/book/${isbn13}`);
+        const response = await apiClient.get(`/bookservice/book/${isbn13}`);
         book.value = response.data.data;
         await checkLibraryStatus();
     } catch (error) {
@@ -136,7 +136,7 @@ const loadBookDetail = async () => {
 // 내 서재 상태 확인
 const checkLibraryStatus = async () => {
     try {
-        const response = await apiClient.get('/api/library');
+        const response = await apiClient.get('/bookservice/library');
         const libraryItems = response.data.data || [];
         const existingBook = libraryItems.find((item) => item.isbn13 === book.value.isbn13);
 
@@ -157,7 +157,7 @@ const checkLibraryStatus = async () => {
 // 도서 추가
 const handleAddBook = async () => {
     try {
-        const response = await apiClient.post(`/api/library/${isbn13}`);
+        const response = await apiClient.post(`/bookservice/library/${isbn13}`);
         bookInLibrary.value = response.data.data;
         isInLibrary.value = true;
         libraryId.value = bookInLibrary.value.libraryId;
@@ -177,7 +177,7 @@ const handleDeleteBook = async () => {
     if (!libraryId.value) return;
     
     try {
-        await apiClient.delete(`/api/library/${libraryId.value}`);
+        await apiClient.delete(`/bookservice/library/${libraryId.value}`);
         isInLibrary.value = false;
         libraryId.value = null;
         bookInLibrary.value = {};
@@ -190,7 +190,7 @@ const handleDeleteBook = async () => {
 // 좋아요 관련 함수들
 const likeordislike = async () => {
     try {
-        const response = await apiClient.get(`/api/library/book/${isbn13}`);
+        const response = await apiClient.get(`/bookservice/library/book/${isbn13}`);
         const likedId = response.data.data;
         bookLikedId.value = likedId;
         isLiked.value = !!likedId;
@@ -247,7 +247,7 @@ const setActiveTab = (tab) => {
 // 도서 상태 로드
 const loadUserGoalExist = async () => {
     try {
-        const response = await apiClient.get(`/api/library/${authStore.user.userId}/${book.value.isbn13}`);
+        const response = await apiClient.get(`/bookservice/library/${authStore.user.userId}/${book.value.isbn13}`);
         bookInLibrary.value = response.data.data || {};
         book.value.status = bookInLibrary.value?.status || "";
     } catch (error) {

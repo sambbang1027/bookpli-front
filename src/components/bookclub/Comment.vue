@@ -9,7 +9,7 @@
       <article class="user-comment">
         <div class="comment-form">
         <div class="user-comment-info">
-            <img class="user-profile" :src="userInfo.profilePath" alt="댓글작성자">
+            <img class="comment-user-profile" :src="userInfo.profilePath" alt="댓글작성자">
             <p class="user-name">{{userInfo.userNickname}}</p>
         </div>
         <textarea class="comment-box" v-model="userComment" @input="adjustHeight" rows =1 placeholder="댓글을 입력하세요"></textarea>
@@ -21,7 +21,7 @@
       <!-- 댓글 목록 -->
       <article v-show="isExisting"  v-for="(comment, index) in comments" :key="comment.commentId" class="comment">
         <div class="user-comment-info">
-            <img class="user-profile" :src="comment.profilePath || Profile" alt="댓글작성자">
+            <img class="comment-user-profile" :src="comment.profilePath || Profile" alt="댓글작성자">
             <p class="user-name">{{ comment.userNickname }}</p>
         </div>
         <div class="comment-cnt">{{ comment.commentContent }}</div>
@@ -77,7 +77,7 @@ import Profile from "@/assets/icons/profile.png"
 
         // 등록된 댓글 가져오기 
       const getComments = async() => {
-        const response = await apiClient.get(`/api/comment/post/${props.postId}`)
+        const response = await apiClient.get(`/bookservice/comment/post/${props.postId}`)
         if(response.data.data && response.data.data.length > 0){
           serverComment.value = response.data.data;
           isExisting.value = true;
@@ -105,7 +105,7 @@ import Profile from "@/assets/icons/profile.png"
 
           // 좋아요 default 값 설정
       const heartChecking = async(commentId,userId) => {
-        const response = await apiClient.get(`/api/commentlike/checking`,{
+        const response = await apiClient.get(`/bookservice/commentlike/checking`,{
           params:{
             commentId : commentId,
           userId : userId
@@ -120,7 +120,7 @@ import Profile from "@/assets/icons/profile.png"
 
       const getLikes = async(commentId) => {
         try{
-          const response = await apiClient.get(`/api/commentlike/${commentId}`);
+          const response = await apiClient.get(`/bookservice/commentlike/${commentId}`);
         if(response.status == 200){
           return response.data.data;
         }
@@ -134,7 +134,7 @@ import Profile from "@/assets/icons/profile.png"
 
       // 유저 정보 가져오기 
       const getInfo = async() => {
-        const response = await apiClient.get(`/api/mypage/${authStore.user.userId}`);
+        const response = await apiClient.get(`/authservice/user/${authStore.user.userId}`);
         userInfo.value = response.data.data;
       }
 
@@ -159,7 +159,7 @@ import Profile from "@/assets/icons/profile.png"
           }
 
         try{
-          const response = await apiClient.post(`/api/comment/insert`,newComment);
+          const response = await apiClient.post(`/bookservice/comment/insert`,newComment);
           if(response.status ==200){
             utilModalStore.showModal(
               '댓글 등록',
@@ -187,7 +187,7 @@ import Profile from "@/assets/icons/profile.png"
           commentId : commentId,
         };
         try{
-          const response = await apiClient.post(`/api/commentlike/mylike`,checking);
+          const response = await apiClient.post(`/bookservice/commentlike/mylike`,checking);
 
           if(response.data.data!==undefined){
           // 현재 상태를 확인하고 적절히 처리
@@ -288,9 +288,13 @@ import Profile from "@/assets/icons/profile.png"
     margin : 5px;
     flex-direction: row;
     display: flex;
+    gap: 5px;
   }
-  .user-profile {
+  .comment-user-profile {
     width: 30px;
+    height: 30px;
+    border-radius: 50%;
+
   }
   .user-name {
     font-size: 15px;

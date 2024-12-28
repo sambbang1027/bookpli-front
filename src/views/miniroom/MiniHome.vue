@@ -149,7 +149,7 @@
     import { ref, computed, onMounted } from "vue";
     import { useRouter } from "vue-router";
     import { useAuthStore } from "@/stores/auth";
-    import { useUserStore } from "@/stores/user.js";
+    import { useUserStore } from "@/stores/user";
     import { useProgressStore } from "@/stores/readingProgressbar";
     import MusicPlayer from '@/components/layouts/musicPlayer.vue';
     import ReadGoalModal from "@/components/readGoal/ReadGoalModal.vue";
@@ -165,7 +165,6 @@
     const router = useRouter();
     const authStore = useAuthStore();
     const progressStore = useProgressStore();
-    const userStore = useUserStore();
 
     const userData = ref({});
     const addList = ref([]);
@@ -203,27 +202,24 @@
     });
 
     const getToken = async () => {
-        try {
-            if (authStore.isAuthenticated) {
-                const spotifyId = authStore.user.spotifyId;
-                const response = await fetch(`http://localhost:8081/tokens/accessToken?spotifyId=${spotifyId}`, {
-                    credentials: "include",
-            });
+    const userStore = useUserStore(); // Pinia userStore 가져오기
+    const authStore = useAuthStore(); // Pinia authStore 가져오기
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch access token");
-            }
+    try {
+        if (authStore.isAuthenticated && authStore.user?.spotifyId) {
+            const spotifyId = authStore.user.spotifyId; // 사용자 Spotify ID
+            const response = await apiClient.get(`/authservice/accessToken/${spotifyId}`);
+            const token = response.data.data;
 
-            const data = await response.json();
-            const accessToken = data.access_token;
-            userStore.setAccessToken(accessToken);
-            } else {
-                console.log("확인할 수 없는 회원입니다.");
-            }
-        } catch (error) {
-            console.error(error.message);
+            // Access Token 설정
+            userStore.setAccessToken(token);
+        } else {
+            console.log("확인할 수 없는 회원입니다.");
         }
-    };
+    } catch (error) {
+        console.error("Error fetching access token:", error.message || error);
+    }
+};
 
     const loadReadList = () => {
         const utilModalStore = useUtilModalStore();
@@ -327,7 +323,7 @@
     // 독서 데이터 로드
     const loadBooks = async (status, targetList) => {
       try {
-        const { data } = await apiClient.get(`/api/miniroom/user/${authStore.user.userId}/book`, {
+        const { data } = await apiClient.get(`/bookservice/miniroom/user/${authStore.user.userId}/book`, {
           params: { status },
         });
         targetList.value = data;
@@ -339,7 +335,7 @@
     // 사용자 정보 로드
     const loadUserProfile = async () => {
       try {
-        const { data } = await apiClient.get(`/api/miniroom/user/${authStore.user.userId}/profile`);
+        const { data } = await apiClient.get(`/authservice/user/${authStore.user.userId}`);
         userData.value = data;
       } catch (error) {
         console.error("사용자 정보 로드 실패:", error);
@@ -370,7 +366,7 @@
 
         if (today > endDate) {
         try {
-            const response = await apiClient.put(`/api/miniroom/fail/${book.isbn13}`);
+            const response = await apiClient.put(`/bookservice/miniroom/fail/${book.isbn13}`);
 
             // 통일된 Alert 모달 호출
             utilModalStore.showModal(
@@ -449,7 +445,7 @@
         "warning",
         async () => {
             try {
-            const { status } = await apiClient.put(`/api/miniroom/clear/${book.isbn13}?status=completed`);
+            const { status } = await apiClient.put(`/bookservice/miniroom/clear/${book.isbn13}?status=completed`);
             if (status === 200) {
                 alert("완독 처리되었습니다.");
                 await loadBooks("reading", readList);
@@ -467,7 +463,7 @@
 
     const likeordislike = async () => {
         try{
-            const response= await apiClient.get(`/api/book/${authStore.user.userId}/${isbn13}`);
+            const response= await apiClient.get(`/bookservice/book/${authStore.user.userId}/${isbn13}`);
             liked.value=response.data;
             console.log(liked.data);
         }catch(error){

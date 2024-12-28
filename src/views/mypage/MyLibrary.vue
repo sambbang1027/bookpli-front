@@ -108,7 +108,7 @@
 
   const getMyLibrary = async () => {
   try {
-    const response = await apiClient.get('/api/library');
+    const response = await apiClient.get(`/bookservice/library/${authStore.user.userId}`);
     books.value = prepareBooksData(response.data.data); // books 데이터를 가공
     updateMenuItems();
   } catch (error) {
@@ -188,7 +188,7 @@ const handleBookLikeStatus = async () => {
 // 좋아요 상태 확인
 const getBookLikeStatus = async () => {
   try {
-    const response = await apiClient.get('/api/library/book-like');
+    const response = await apiClient.get(`/bookservice/library/book-like/${authStore.user.userId}`);
     const likedData = response.data.data.map((item) => ({
       author: item.bookDTO.author,
       cover: item.bookDTO.cover,
@@ -269,7 +269,7 @@ const calculateRemainingDays = (endDate) => {
 // 내 서재에서 담기 삭제
 const deleteLibrary = async (libraryId) => {
   try {
-    await apiClient.delete(`/api/library/${libraryId}`);
+    await apiClient.delete(`/bookservice/library/${authStore.user.userId}/${libraryId}`);
 
     // 서재 데이터에서 제거
     books.value = books.value.filter((book) => book.libraryId !== libraryId);

@@ -62,7 +62,7 @@ const reviews = ref([]);
     // 리뷰 리스트 조회
 const getList = async(isbn13) => {
     try{
-        const response = await apiClient.get(`/api/review/book/${isbn13}`);
+        const response = await apiClient.get(`/bookservice/review/book/${isbn13}`);
         reviews.value = response.data.data || [];
         if(response.status ==200){
             reviews.value=response.data.data;

@@ -135,7 +135,7 @@
 
       const searchBookClub = async(searchValue) => {
         try{
-          const response = await apiClient.get("/api/bookclub/search", {
+          const response = await apiClient.get("/bookservice/bookclub/search", {
             params : {keyword : searchValue},
           });
             if(response.status == 200){
@@ -163,7 +163,7 @@
           }
 
         const response = await apiClient.post(
-  `/api/userbookclub/add/bookclub?isbn13=${encodeURIComponent(isbn13)}&userId=${authStore.user.userId}`
+  `/bookservice/userbookclub/add/bookclub?isbn13=${encodeURIComponent(isbn13)}&userId=${authStore.user.userId}`
 );
         if(response.data.data === true){
           utilModalStore.showModal(
@@ -190,7 +190,7 @@
     const readMyClubs = async() => {
       try{
       const response = await apiClient.get(
-        "/api/userbookclub/mybookclubs",
+        "/bookservice/userbookclub/mybookclubs",
        {params : {userId :authStore.user.userId}
       });
       myclubList.value = response.data.data;
@@ -225,7 +225,7 @@
     const removeClub = async(userClubId) => {
         try{
         const response = await apiClient.delete(
-          "/api/userbookclub/remove/myclub", {
+          "/bookservice/userbookclub/remove/myclub", {
             params : {userClubId : userClubId},
           });
           if(response.status === 200){

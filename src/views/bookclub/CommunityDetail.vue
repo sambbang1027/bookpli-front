@@ -203,7 +203,7 @@
           /* 게시글 조회  */
     const getPosts = async() =>{
     try{
-      const response = await apiClient.get("/api/post/bookclubs", {
+      const response = await apiClient.get("/bookservice/post/bookclubs", {
         params: {bookclubId : route.query.bookClubId},
       });
       if(response.status == 200){
@@ -253,7 +253,7 @@
             /* 좋아요 수 조회 */
     const getLikes = async(postId)=> {
       try{
-        const response = await apiClient.get(`/api/postlike/${postId}`);
+        const response = await apiClient.get(`/bookservice/postlike/${postId}`);
         return response.data.data;
       }catch(error){
         console.error(error, "에러발생");
@@ -262,7 +262,7 @@
     }
         /* default 좋아요 처리 */
     const heartChecking = async(postId,userId) =>{
-      const response = await apiClient.get(`/api/postlike/checkingLike`, {
+      const response = await apiClient.get(`/bookservice/postlike/checkingLike`, {
         params: {
           postId : postId ,
           userId : userId , 
@@ -283,7 +283,7 @@
       }
 
       try{
-        const response = await apiClient.post(`api/postlike/mylike` ,checking );
+        const response = await apiClient.post(`bookservice/postlike/mylike` ,checking );
 
         if(response.data.data !== undefined){
           posts.value[index].likes.changeLike = response.data.data  ? like : dislike;
@@ -533,7 +533,7 @@
   .post-profile {
     width: 50px;
     height: 50px;
-    border-radius: 10px;
+    border-radius: 50%;
   }
   .post-user-cnt{
     display: flex;

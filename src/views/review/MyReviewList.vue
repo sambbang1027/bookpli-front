@@ -103,7 +103,7 @@ export default {
             /*  리뷰  조회  */
     const getMyList = async () => {
       try{
-        const response = await apiClient.get(`/api/review/myreview/${authStore.user.userId}`)
+        const response = await apiClient.get(`/bookservice/review/myreview/${authStore.user.userId}`)
         if(response.status == 200){
         serverReview.value = response.data;
         // 각각의 배열에 showModal을 넣어서 개별적 실행 
@@ -145,7 +145,7 @@ export default {
         userId : editingReview.value.userId,
       };
 
-     const response = await apiClient.put(`/api/review/update`, review);
+     const response = await apiClient.put(`/bookservice/review/update`, review);
         
       const index = reviews.value.findIndex((item) => item.reviewId === review.reviewId);
       if(index !== -1){
@@ -175,7 +175,7 @@ export default {
           // 서버 삭제 요청
     const deleteReview = async(reviewId) => {
       try{
-        const response = await apiClient.delete(`/api/review/delete/${reviewId}`)
+        const response = await apiClient.delete(`/bookservice/review/delete/${reviewId}`)
 
         if(response.status=== 200){
           const checkUser = authStore.user.userId;

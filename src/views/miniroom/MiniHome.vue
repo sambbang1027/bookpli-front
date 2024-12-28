@@ -208,11 +208,8 @@
     try {
         if (authStore.isAuthenticated && authStore.user?.spotifyId) {
             const spotifyId = authStore.user.spotifyId; // 사용자 Spotify ID
-            console.log("Spotify ID:", spotifyId);
-
             const response = await apiClient.get(`/authservice/accessToken/${spotifyId}`);
             const token = response.data.data;
-            console.log("토큰 확인!!!!!!!!!!! Access Token:", token);
 
             // Access Token 설정
             userStore.setAccessToken(token);

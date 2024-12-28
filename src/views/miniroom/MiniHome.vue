@@ -339,8 +339,9 @@
     // 사용자 정보 로드
     const loadUserProfile = async () => {
       try {
-        const { data } = await apiClient.get(`/authservice/user/${authStore.user.userId}`);
-        userData.value = data;
+        const response = await apiClient.get(`/authservice/user/${authStore.user.userId}`);
+        userData.value = response.data.data;
+     
       } catch (error) {
         console.error("사용자 정보 로드 실패:", error);
       }

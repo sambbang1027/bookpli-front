@@ -189,6 +189,7 @@ const handleBookLikeStatus = async () => {
 const getBookLikeStatus = async () => {
   try {
     const response = await apiClient.get(`/bookservice/library/book-like/${authStore.user.userId}`);
+    console.log(response.data);
     const likedData = response.data.data.map((item) => ({
       author: item.bookDTO.author,
       cover: item.bookDTO.cover,

@@ -206,7 +206,7 @@
         try {
             if (authStore.isAuthenticated) {
                 const spotifyId = authStore.user.spotifyId;
-                const response = await fetch(`http://localhost:8080/tokens/accessToken?spotifyId=${spotifyId}`, {
+                const response = await fetch(`/authservice/tokens/accessToken?spotifyId=${spotifyId}`, {
                     credentials: "include",
             });
 

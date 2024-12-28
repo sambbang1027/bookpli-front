@@ -671,7 +671,7 @@
     width: 30px;
     height: 30px;
     margin-right: 10px;
-    border-radius: 10px;
+    border-radius: 50%;
     margin-top: 10px;
   }
   .username {
@@ -688,7 +688,7 @@
 
   .post-cnt {
     margin: 10px 0;
-    line-height: 1.6;
+    line-height: 1;
     border: none;
     white-space: pre-wrap; /* 줄바꿈과 공백 유지 */
   }
@@ -738,7 +738,7 @@
     .post-image-img{
       width: 100%;
       height: 300px;
-      object-fit: cover;
+      : cover;
 
     }    
     .image-circle {

@@ -330,7 +330,7 @@
     }
 
     .mypost-cnt {
-      line-height: 1.6;
+      line-height: 1;
       border: none;
       white-space: pre-wrap;
       display: flex;
@@ -367,7 +367,7 @@
       flex-direction: column;
       justify-content: flex-start;
       margin-top: 10px;
-      gap: 10px;
+      gap: 5px;
     }
     
     /* 아이콘 섹션 */
@@ -490,7 +490,7 @@
     .post-image-img{
       width: 100%;
       height: 300px;
-      object-fit: cover;
+      object-fit: contain;
 
     }    
     .image-circle {

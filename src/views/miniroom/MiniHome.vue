@@ -484,9 +484,8 @@
     // 로그인 직후 회원 정보 저장
     const getUserInfo = async() => {
       try {
-        const response = await apiClient.get("/authservice/user-pinia");
-        userData.value= response.data.data;
-        console.log(userData.value);
+        const response = await apiClient.get("/api/user-info");
+        userData.value= response.data;
         if (response.data.data) {
           const userInfo = {
             spotifyId: response.data.data.spotifyId,

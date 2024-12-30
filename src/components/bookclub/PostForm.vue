@@ -9,7 +9,7 @@
                 <hr>
             </header>
         <article class="post-form">
-            <div class="preview">
+            <div class="preview-section">
                 <!-- 이미지 미리보기 -->
                 <div :v-if="imageSrc.length > 0 " 
                     v-for="img,index in imageSrc" 
@@ -272,6 +272,7 @@ import { useLoadingStore } from '@/stores/loading';
         height: 300px;
         resize: none;
         border: none;
+        line-height: 1.2;
         outline: none;
     }
     .preview {
@@ -289,6 +290,12 @@ import { useLoadingStore } from '@/stores/loading';
     .del-img:hover{
         cursor: pointer;
     }
+    .preview-section{
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
     .image-preview {
     display: flex;
     justify-content: center;

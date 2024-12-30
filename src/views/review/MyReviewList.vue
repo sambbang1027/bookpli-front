@@ -47,7 +47,7 @@
             style="width: 27px; ">
           </div>
       </div>
-        <div class="content-icon" style="display: flex;">
+        <div class="content-icon">
           <p class="summary">
           <div v-if="editingId === review.reviewId">
             <textarea v-model="editingReview.reviewContent" class="review-textbox-edit"></textarea>
@@ -288,6 +288,11 @@ export default {
     padding: 20px 40px;
   }
   
+  .content-icon {
+    display: flex;
+    text-align: left;
+  }
+
   .review-image {
     width: 120px;
     border: 1px solid #dddddd;

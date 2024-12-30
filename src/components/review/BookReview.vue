@@ -15,7 +15,7 @@
     <div class="review-content">
         <div class="title-icon">
             <div class="userInfo">
-                <img :src="review.profilePath || profile" class="user-img" alt="user profile">
+                <img :src="review.profilePath || profile" class="review-user-img" alt="user profile">
                 <p class="user-name">{{review.userNickname || 'USER'}}</p>
             </div>
             <article class="article">
@@ -185,9 +185,10 @@ const getList = async(isbn13) => {
     max-width: 1200px;
   }
 
-  .user-img{
+  .review-user-img{
     width: 40px;
     height: 40px;
+    border-radius: 50%;
   }
 
   .user-name{

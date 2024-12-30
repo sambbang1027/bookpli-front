@@ -118,7 +118,7 @@
                 <!--  유저 정보와 텍스트 -->
                 <div class="text-box-bookclub">
                   <div class="post-header">
-                    <img class="le" :src="post.profilePath || profile" alt="커뮤니티 이미지" />
+                    <img class="post-profile" :src="post.profilePath || profile" alt="커뮤니티 이미지" />
                   </div>
                   <!-- 본문 글 -->
                    <div class="post-user-cnt">
@@ -531,8 +531,8 @@
     padding-top: 20px
   }
   .post-profile {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
   }
   .post-user-cnt{

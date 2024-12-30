@@ -41,7 +41,7 @@
             <img @click="confirmRemove(myclub.userClubId)" 
             src="@/assets/icons/close.png" 
             alt="remove club" 
-            class="close-icon" 
+            class="bookclub-close-icon" 
             v-show="showEdit"
             />
         </div>
@@ -357,6 +357,7 @@ body {
   height: 50px;
   transition: background-color 0.3s ease;
   margin-top: 20px;
+  justify-content: space-between;
 }
 
 .bookclub-item:hover {
@@ -388,10 +389,9 @@ body {
   margin :auto
 }
 
-.close-icon {
+.bookclub-close-icon {
   width: 13px;
   height: 13px;
-  margin: auto;
   margin-left: 5px;
 }
 

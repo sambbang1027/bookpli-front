@@ -322,6 +322,7 @@ export default {
         height: 300px;
         resize: none;
         border: none;
+        line-height: 1.2;
         outline: none;
     }
     .preview {
